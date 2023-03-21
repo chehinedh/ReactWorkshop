@@ -1,46 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-import Products from './components/fnComponents/Products';
-import { Routes, Route } from 'react-router-dom';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchProducts } from './redux/slices/productsSlice';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import NavigationBar from "./components/NavigationBar";
+import Notfound from "./components/Notfound";
+import Products from "./components/Products";
+import Testingcomp from "./components/Testingcomp";
+import Testing from "./components/Testing";
+import React from "react";
+//import ProductDetails from "./components/ProductDetails";
 
-import NavigationBar from './components/NavigationBar';
-// import NotFound from './components/NotFound';
-const NotFound = React.lazy(() => import('./components/NotFound'));
-// import ProductDetails from './components/fnComponents/ProductDetails';
-const ProductDetails = React.lazy(() => import('./components/fnComponents/ProductDetails'));
-// import TestComponent from './components/TestComponent';
-const TestComponent = React.lazy(() => import('./components/TestComponent'));
-
-const ProductFrom = React.lazy(() => import('./components/fnComponents/ProductForm'));
-const ProductUpdateForm = React.lazy(() => import('./components/fnComponents/ProductUpdateForm'));
-
-
+const ProductDetails =React.lazy (() => import('./components/ProductDetails'))
 function App() {
-  const dispatch = useDispatch();
-
   return (
     <>
-    <React.Suspense fallback={<h1> Loading... </h1>}>
+    <React.Suspense fallback={<h1> Loading</h1>} >
       <NavigationBar />
-        <Routes>
-          <Route path='/products'>
-            <Route 
-              index 
-              element={<Products />} 
-              loader={dispatch(fetchProducts())}
-            />
-            <Route path='add' element={<ProductFrom />}/>
-            <Route path='update/:id' element={<ProductUpdateForm />}/>
-            <Route path=':id' element={<ProductDetails />} />
-          </Route>
-          <Route path='/test' element={<TestComponent/>}/>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-    </React.Suspense>
-    </>
+      <Routes>
+        <Route path="/Parent">
+          <Route index element={<Products />} />
+          <Route path=":name" element={<ProductDetails />}></Route>
+        </Route>
+        <Route path="/products" element={<Products />}></Route>
+        <Route path="/test/:username" element={<Testing />}></Route>
+        <Route path="Testingit" element={<Testingcomp />}></Route>
+        <Route path="*" element={<Notfound />}></Route>
+      </Routes>
+      </React.Suspense>
+      </>
+
   );
 }
 
